@@ -8,7 +8,9 @@ namespace Nodify
     {
         public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
-            double result = (double)values[0] - (double)values[1];
+            if (values.Any(x => x is UnsetValueType)) return false;
+
+            double result = (double)values[0]! - (double)values[1]!;
             return result;
         }
 
