@@ -122,6 +122,8 @@ namespace Nodify
         public static readonly StyledProperty<ConnectionDirection> DirectionProperty = AvaloniaProperty.Register<BaseConnection, ConnectionDirection>(nameof(Direction));
         public static readonly StyledProperty<uint> DirectionalArrowsCountProperty = AvaloniaProperty.Register<BaseConnection, uint>(nameof(DirectionalArrowsCount), BoxValue.UInt0);
         public static readonly StyledProperty<double> DirectionalArrowsOffsetProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsOffset), BoxValue.Double0);
+        public static readonly StyledProperty<bool> IsAnimatingDirectionalArrowsProperty = AvaloniaProperty.Register<BaseConnection, bool>(nameof(IsAnimatingDirectionalArrows), new FrameworkPropertyMetadata(BoxValue.False, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnIsAnimatingDirectionalArrowsChanged)));
+        public static readonly StyledProperty<double> DirectionalArrowsAnimationDurationProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsAnimationDuration), new FrameworkPropertyMetadata(BoxValue.Double2, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnDirectionalArrowsAnimationDurationChanged)));
         public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(Spacing), BoxValue.Double0);
         public static readonly StyledProperty<Size> ArrowSizeProperty = AvaloniaProperty.Register<BaseConnection, Size>(nameof(ArrowSize), BoxValue.ArrowSize);
         public static readonly StyledProperty<ArrowHeadEnds> ArrowEndsProperty = AvaloniaProperty.Register<BaseConnection, ArrowHeadEnds>(nameof(ArrowEnds), ArrowHeadEnds.End);
@@ -137,6 +139,28 @@ namespace Nodify
         public static readonly StyledProperty<FontWeight> FontWeightProperty = TextElement.FontWeightProperty.AddOwner<BaseConnection>();
         public static readonly StyledProperty<FontStyle> FontStyleProperty = TextElement.FontStyleProperty.AddOwner<BaseConnection>();
         public static readonly StyledProperty<FontStretch> FontStretchProperty = TextElement.FontStretchProperty.AddOwner<BaseConnection>();
+
+        private static void OnIsAnimatingDirectionalArrowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var con = (BaseConnection)d;
+            if (e.NewValue is true)
+            {
+                con.StartAnimation(con.DirectionalArrowsAnimationDuration);
+            }
+            else
+            {
+                con.StopAnimation();
+            }
+        }
+
+        private static void OnDirectionalArrowsAnimationDurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var con = (BaseConnection)d;
+            if (con.IsAnimatingDirectionalArrows)
+            {
+                con.StartAnimation((double)e.NewValue);
+            }
+        }
 
         private static void OnOutlinePenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -240,6 +264,24 @@ namespace Nodify
         {
             get => (double)GetValue(DirectionalArrowsOffsetProperty);
             set => SetValue(DirectionalArrowsOffsetProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets whether the directional arrows should be flowing through the connection wire.
+        /// </summary>
+        public bool IsAnimatingDirectionalArrows
+        {
+            get => (bool)GetValue(IsAnimatingDirectionalArrowsProperty);
+            set => SetValue(IsAnimatingDirectionalArrowsProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the duration in seconds of a directional arrow flowing from <see cref="Source"/> to <see cref="Target"/>.
+        /// </summary>
+        public double DirectionalArrowsAnimationDuration
+        {
+            get => (double)GetValue(DirectionalArrowsAnimationDurationProperty);
+            set => SetValue(DirectionalArrowsAnimationDurationProperty, value);
         }
 
         /// <summary>
@@ -678,12 +720,8 @@ namespace Nodify
         /// <param name="duration">The duration for moving an arrowhead from <see cref="Source"/> to <see cref="Target"/>.</param>
         public void StartAnimation(double duration = 1.5d)
         {
-            if (DirectionalArrowsCount > 0)
-            {
-                animationTokenSource?.Cancel();
-                animationTokenSource = new CancellationTokenSource();
-                this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration, animationTokenSource.Token);
-            }
+            StopAnimation();
+            this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration);
         }
 
         /// <summary>Stops the animation started by <see cref="StartAnimation(double)"/></summary>

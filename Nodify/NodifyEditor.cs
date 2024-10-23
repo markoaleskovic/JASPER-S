@@ -1428,7 +1428,7 @@ namespace Nodify
         /// Inverts the <see cref="ItemContainer"/>s selection in the specified <paramref name="area"/>.
         /// </summary>
         /// <param name="area">The area to look for <see cref="ItemContainer"/>s.</param>
-        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br /> False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
+        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br />False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
         public void InvertSelection(Rect area, bool fit = false)
         {
             ItemCollection items = Items;
@@ -1461,7 +1461,7 @@ namespace Nodify
         /// </summary>
         /// <param name="area">The area to look for <see cref="ItemContainer"/>s.</param>
         /// <param name="append">If true, it will add to the existing selection.</param>
-        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br /> False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
+        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br />False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
         public void SelectArea(Rect area, bool append = false, bool fit = false)
         {
             if (!append)
@@ -1489,7 +1489,7 @@ namespace Nodify
         /// Unselect the <see cref="ItemContainer"/>s in the specified <paramref name="area"/>.
         /// </summary>
         /// <param name="area">The area to look for <see cref="ItemContainer"/>s.</param>
-        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br /> False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
+        /// <param name="fit">True to check if the <paramref name="area"/> contains the <see cref="ItemContainer"/>. <br />False to check if <paramref name="area"/> intersects the <see cref="ItemContainer"/>.</param>
         public void UnselectArea(Rect area, bool fit = false)
         {
             IReadOnlyList<object?> items = Selection.SelectedItems;
