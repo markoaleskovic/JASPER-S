@@ -122,8 +122,8 @@ namespace Nodify
         public static readonly StyledProperty<ConnectionDirection> DirectionProperty = AvaloniaProperty.Register<BaseConnection, ConnectionDirection>(nameof(Direction));
         public static readonly StyledProperty<uint> DirectionalArrowsCountProperty = AvaloniaProperty.Register<BaseConnection, uint>(nameof(DirectionalArrowsCount), BoxValue.UInt0);
         public static readonly StyledProperty<double> DirectionalArrowsOffsetProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsOffset), BoxValue.Double0);
-        public static readonly StyledProperty<bool> IsAnimatingDirectionalArrowsProperty = AvaloniaProperty.Register<BaseConnection, bool>(nameof(IsAnimatingDirectionalArrows), new FrameworkPropertyMetadata(BoxValue.False, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnIsAnimatingDirectionalArrowsChanged)));
-        public static readonly StyledProperty<double> DirectionalArrowsAnimationDurationProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsAnimationDuration), new FrameworkPropertyMetadata(BoxValue.Double2, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnDirectionalArrowsAnimationDurationChanged)));
+        public static readonly StyledProperty<bool> IsAnimatingDirectionalArrowsProperty = AvaloniaProperty.Register<BaseConnection, bool>(nameof(IsAnimatingDirectionalArrows), BoxValue.False);
+        public static readonly StyledProperty<double> DirectionalArrowsAnimationDurationProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsAnimationDuration), BoxValue.Double2);
         public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(Spacing), BoxValue.Double0);
         public static readonly StyledProperty<Size> ArrowSizeProperty = AvaloniaProperty.Register<BaseConnection, Size>(nameof(ArrowSize), BoxValue.ArrowSize);
         public static readonly StyledProperty<ArrowHeadEnds> ArrowEndsProperty = AvaloniaProperty.Register<BaseConnection, ArrowHeadEnds>(nameof(ArrowEnds), ArrowHeadEnds.End);
@@ -721,7 +721,8 @@ namespace Nodify
         public void StartAnimation(double duration = 1.5d)
         {
             StopAnimation();
-            this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration);
+            animationTokenSource = new();
+            this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration, animationTokenSource.Token);
         }
 
         /// <summary>Stops the animation started by <see cref="StartAnimation(double)"/></summary>
