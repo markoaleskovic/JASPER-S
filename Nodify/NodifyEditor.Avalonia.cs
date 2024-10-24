@@ -77,4 +77,6 @@ public partial class NodifyEditor
             }
         }
     }
+
+    protected override Type StyleKeyOverride => typeof(NodifyEditor);
 }

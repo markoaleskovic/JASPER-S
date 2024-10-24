@@ -140,6 +140,30 @@ namespace Nodify
         public static readonly StyledProperty<FontStyle> FontStyleProperty = TextElement.FontStyleProperty.AddOwner<BaseConnection>();
         public static readonly StyledProperty<FontStretch> FontStretchProperty = TextElement.FontStretchProperty.AddOwner<BaseConnection>();
 
+        public static readonly AttachedProperty<bool> IsSelectableProperty = AvaloniaProperty.RegisterAttached<BaseConnection, Control, bool>("IsSelectable");
+        public static readonly AttachedProperty<bool> IsSelectedProperty = AvaloniaProperty.RegisterAttached<BaseConnection, Control, bool>("IsSelected", defaultBindingMode: BindingMode.TwoWay);
+
+        private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var container = d is BaseConnection conn ? conn.Container : ((UIElement)d).GetParentOfType<ConnectionContainer>();
+            if (container != null)
+            {
+                container.IsSelected = (bool)e.NewValue;
+            }
+        }
+
+        public static bool GetIsSelectable(UIElement elem)
+            => (bool)elem.GetValue(IsSelectableProperty);
+
+        public static void SetIsSelectable(UIElement elem, bool value)
+            => elem.SetValue(IsSelectableProperty, value);
+
+        public static bool GetIsSelected(UIElement elem)
+            => (bool)elem.GetValue(IsSelectedProperty);
+
+        public static void SetIsSelected(UIElement? elem, bool value)
+            => elem?.SetValue(IsSelectedProperty, value);
+
         private static void OnIsAnimatingDirectionalArrowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var con = (BaseConnection)d;
@@ -436,11 +460,23 @@ namespace Nodify
         #endregion
 
         /// <summary>
+        /// Whether to prioritize controls of type <see cref="BaseConnection"/> inside custom connections (connection wrappers) 
+        /// when setting the <see cref="IsSelectableProperty"/> and <see cref="IsSelectedProperty"/> attached properties.
+        /// </summary>
+        /// <remarks>
+        /// Will fallback to the first <see cref="UIElement"/> if no <see cref="BaseConnection"/> is found or the value is false.
+        /// </remarks>
+        public static bool PrioritizeBaseConnectionForSelection { get; set; } = true;
+
+        /// <summary>
         /// Gets a vector that has its coordinates set to 0.
         /// </summary>
         protected static readonly Vector ZeroVector = new Vector(0d, 0d);
         
         private Pen? _outlinePen;
+
+        private ConnectionContainer? _container;
+        private ConnectionContainer? Container => _container ??= this.GetParentOfType<ConnectionContainer>();
 
         protected override Geometry CreateDefiningGeometry()
         {
@@ -756,8 +792,7 @@ namespace Nodify
 
         protected internal void OnSplit(Point splitLocation)
         {
-            object? connection = DataContext;
-            var args = new ConnectionEventArgs(connection)
+            var args = new ConnectionEventArgs(DataContext)
             {
                 RoutedEvent = SplitEvent,
                 SplitLocation = splitLocation,
@@ -775,8 +810,7 @@ namespace Nodify
 
         protected internal void OnDisconnect()
         {
-            object? connection = DataContext;
-            var args = new ConnectionEventArgs(connection)
+            var args = new ConnectionEventArgs(DataContext)
             {
                 RoutedEvent = DisconnectEvent,
                 Source = this

@@ -193,6 +193,7 @@
                                            SourcePosition="{Binding Source.Position}"
                                            TargetPosition="{Binding Target.Position}"
                                            Cursor="Hand"
+                                           nodify:BaseConnection.IsSelectable="True"
                                            Fill="Transparent"
                                            StrokeThickness="3">
                         <nodify:StepConnection.Stroke>
@@ -207,6 +208,14 @@
                                     <Setter Property="OutlineBrush">
                                         <Setter.Value>
                                             <SolidColorBrush Color="White" Opacity="0.15" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                                <Style Selector="^[(nodify|BaseConnection.IsSelected)=True]">
+                                    <Setter Property="OutlineBrush">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="DodgerBlue"
+                                                             Opacity="0.25" />
                                         </Setter.Value>
                                     </Setter>
                                 </Style>

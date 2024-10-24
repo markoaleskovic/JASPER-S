@@ -28,6 +28,19 @@ namespace Nodify
             return (T)current;
         }
 
+        public static T? GetChildOfType<T>(this DependencyObject? depObj) where T : DependencyObject
+        {
+            if (depObj == null)
+            {
+                return default;
+            }
+
+            if (depObj is Visual visual)
+                return visual.FindDescendantOfType<T>();
+
+            return default;
+        }
+
         public static T? GetElementUnderMouse<T>(this UIElement container, Point relativePosition)
             where T : UIElement
         {

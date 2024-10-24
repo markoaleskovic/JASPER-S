@@ -17,5 +17,6 @@ public partial class BaseConnection
         OutlineThicknessProperty.Changed.AddClassHandler<BaseConnection>(OnOutlinePenChanged);
         IsAnimatingDirectionalArrowsProperty.Changed.AddClassHandler<BaseConnection>(OnIsAnimatingDirectionalArrowsChanged);
         DirectionalArrowsAnimationDurationProperty.Changed.AddClassHandler<BaseConnection>(OnDirectionalArrowsAnimationDurationChanged);
+        IsSelectedProperty.Changed.AddClassHandler<Control>(OnIsSelectedChanged);
     }
 }
