@@ -12,7 +12,7 @@ namespace Nodify
         /// <summary>
         /// The number of units the mouse wheel is rotated to scroll one line.
         /// </summary>
-        public static double ScrollIncrement { get; set; } = MouseWheelDeltaForOneLine * MouseWheelAvaloniaToWpfScale / 2;
+        public static double ScrollIncrement { get; set; } = MouseWheelDeltaForOneLine / 2;
 
         bool ILogicalScrollable.CanHorizontallyScroll { get; set; }
         bool ILogicalScrollable.CanVerticallyScroll { get; set; }
@@ -120,7 +120,7 @@ namespace Nodify
                 _viewportLocationBeforeScrolling = null;
 
                 var extent = ItemsExtent;
-                extent.Union(new Rect(ViewportLocation, ViewportSize));
+                extent = extent.Union(new Rect(ViewportLocation, ViewportSize));
 
                 _extentHeight = extent.Height;
                 _extentWidth = extent.Width;
