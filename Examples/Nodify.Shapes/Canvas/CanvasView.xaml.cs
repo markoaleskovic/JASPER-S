@@ -64,7 +64,7 @@ namespace Nodify.Shapes.Canvas
         private ShapeViewModel? _drawingShape;
         private Point _initialLocation;
 
-        protected override void OnPointerPressed(PointerPressedEventArgs e)
+        private void Editor_MouseDown(object sender, PointerPressedEventArgs e)
         {
             var toolbarVm = ((CanvasViewModel)DataContext).CanvasToolbar;
             if (toolbarVm.SelectedTool != CanvasTool.None && DrawingGesturesMappings.Instance.Draw.Matches(this, e))
@@ -74,7 +74,7 @@ namespace Nodify.Shapes.Canvas
             }
         }
 
-        protected override void OnPointerMoved(PointerEventArgs e)
+        private void Editor_MouseMove(object sender, PointerEventArgs e)
         {
             if (_drawingShape != null)
             {
@@ -93,15 +93,9 @@ namespace Nodify.Shapes.Canvas
             }
         }
 
-        protected override void OnPointerReleased(PointerReleasedEventArgs e)
+        private void Editor_MouseUp(object sender, PointerReleasedEventArgs e)
         {
             _drawingShape = null;
-        }
-
-        private void Toolbar_MouseDown(object sender, PointerPressedEventArgs e)
-        {
-            // prevent creating shape by clicking on the toolbar
-            e.Handled = true;
         }
 
         #endregion

@@ -62,6 +62,12 @@ namespace Nodify
             editor.SetCurrentValue(DpiScaledViewportTransformProperty, dpiScaledTransform);
         }
 
+        private static void OnItemsExtentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var editor = (NodifyEditor)d;
+            editor.UpdateScrollbars();
+        }
+
         private static void OnViewportLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var editor = (NodifyEditor)d;
@@ -157,7 +163,11 @@ namespace Nodify
         /// Updates the <see cref="ViewportSize"/> and raises the <see cref="ViewportUpdatedEvent"/>.
         /// Called when the <see cref="UIElement.RenderSize"/> or <see cref="ViewportZoom"/> is changed.
         /// </summary>
-        protected void OnViewportUpdated() => RaiseEvent(new RoutedEventArgs(ViewportUpdatedEvent, this));
+        protected void OnViewportUpdated()
+        {
+            UpdateScrollbars();
+            RaiseEvent(new RoutedEventArgs(ViewportUpdatedEvent, this));
+        }
 
         #endregion
 
@@ -927,6 +937,7 @@ namespace Nodify
             SelectedItemsProperty.Changed.AddClassHandler<NodifyEditor>(OnSelectedItemsSourceChanged);
             IsCuttingProperty.Changed.AddClassHandler<NodifyEditor>(OnIsCuttingChanged);
             CanSelectMultipleItemsProperty.Changed.AddClassHandler<NodifyEditor>(OnCanSelectMultipleItemsChanged);
+            ItemsExtentProperty.Changed.AddClassHandler<NodifyEditor>(OnItemsExtentChanged);
 
             EditorCommands.Register(typeof(NodifyEditor));
         }
