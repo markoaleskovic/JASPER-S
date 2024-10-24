@@ -122,6 +122,8 @@ namespace Nodify
         public static readonly StyledProperty<ConnectionDirection> DirectionProperty = AvaloniaProperty.Register<BaseConnection, ConnectionDirection>(nameof(Direction));
         public static readonly StyledProperty<uint> DirectionalArrowsCountProperty = AvaloniaProperty.Register<BaseConnection, uint>(nameof(DirectionalArrowsCount), BoxValue.UInt0);
         public static readonly StyledProperty<double> DirectionalArrowsOffsetProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsOffset), BoxValue.Double0);
+        public static readonly StyledProperty<bool> IsAnimatingDirectionalArrowsProperty = AvaloniaProperty.Register<BaseConnection, bool>(nameof(IsAnimatingDirectionalArrows), BoxValue.False);
+        public static readonly StyledProperty<double> DirectionalArrowsAnimationDurationProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(DirectionalArrowsAnimationDuration), BoxValue.Double2);
         public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<BaseConnection, double>(nameof(Spacing), BoxValue.Double0);
         public static readonly StyledProperty<Size> ArrowSizeProperty = AvaloniaProperty.Register<BaseConnection, Size>(nameof(ArrowSize), BoxValue.ArrowSize);
         public static readonly StyledProperty<ArrowHeadEnds> ArrowEndsProperty = AvaloniaProperty.Register<BaseConnection, ArrowHeadEnds>(nameof(ArrowEnds), ArrowHeadEnds.End);
@@ -137,6 +139,52 @@ namespace Nodify
         public static readonly StyledProperty<FontWeight> FontWeightProperty = TextElement.FontWeightProperty.AddOwner<BaseConnection>();
         public static readonly StyledProperty<FontStyle> FontStyleProperty = TextElement.FontStyleProperty.AddOwner<BaseConnection>();
         public static readonly StyledProperty<FontStretch> FontStretchProperty = TextElement.FontStretchProperty.AddOwner<BaseConnection>();
+
+        public static readonly AttachedProperty<bool> IsSelectableProperty = AvaloniaProperty.RegisterAttached<BaseConnection, Control, bool>("IsSelectable");
+        public static readonly AttachedProperty<bool> IsSelectedProperty = AvaloniaProperty.RegisterAttached<BaseConnection, Control, bool>("IsSelected", defaultBindingMode: BindingMode.TwoWay);
+
+        private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var container = d is BaseConnection conn ? conn.Container : ((UIElement)d).GetParentOfType<ConnectionContainer>();
+            if (container != null)
+            {
+                container.IsSelected = (bool)e.NewValue;
+            }
+        }
+
+        public static bool GetIsSelectable(UIElement elem)
+            => (bool)elem.GetValue(IsSelectableProperty);
+
+        public static void SetIsSelectable(UIElement elem, bool value)
+            => elem.SetValue(IsSelectableProperty, value);
+
+        public static bool GetIsSelected(UIElement elem)
+            => (bool)elem.GetValue(IsSelectedProperty);
+
+        public static void SetIsSelected(UIElement? elem, bool value)
+            => elem?.SetValue(IsSelectedProperty, value);
+
+        private static void OnIsAnimatingDirectionalArrowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var con = (BaseConnection)d;
+            if (e.NewValue is true)
+            {
+                con.StartAnimation(con.DirectionalArrowsAnimationDuration);
+            }
+            else
+            {
+                con.StopAnimation();
+            }
+        }
+
+        private static void OnDirectionalArrowsAnimationDurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var con = (BaseConnection)d;
+            if (con.IsAnimatingDirectionalArrows)
+            {
+                con.StartAnimation((double)e.NewValue);
+            }
+        }
 
         private static void OnOutlinePenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -240,6 +288,24 @@ namespace Nodify
         {
             get => (double)GetValue(DirectionalArrowsOffsetProperty);
             set => SetValue(DirectionalArrowsOffsetProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets whether the directional arrows should be flowing through the connection wire.
+        /// </summary>
+        public bool IsAnimatingDirectionalArrows
+        {
+            get => (bool)GetValue(IsAnimatingDirectionalArrowsProperty);
+            set => SetValue(IsAnimatingDirectionalArrowsProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the duration in seconds of a directional arrow flowing from <see cref="Source"/> to <see cref="Target"/>.
+        /// </summary>
+        public double DirectionalArrowsAnimationDuration
+        {
+            get => (double)GetValue(DirectionalArrowsAnimationDurationProperty);
+            set => SetValue(DirectionalArrowsAnimationDurationProperty, value);
         }
 
         /// <summary>
@@ -394,11 +460,23 @@ namespace Nodify
         #endregion
 
         /// <summary>
+        /// Whether to prioritize controls of type <see cref="BaseConnection"/> inside custom connections (connection wrappers) 
+        /// when setting the <see cref="IsSelectableProperty"/> and <see cref="IsSelectedProperty"/> attached properties.
+        /// </summary>
+        /// <remarks>
+        /// Will fallback to the first <see cref="UIElement"/> if no <see cref="BaseConnection"/> is found or the value is false.
+        /// </remarks>
+        public static bool PrioritizeBaseConnectionForSelection { get; set; } = true;
+
+        /// <summary>
         /// Gets a vector that has its coordinates set to 0.
         /// </summary>
         protected static readonly Vector ZeroVector = new Vector(0d, 0d);
         
         private Pen? _outlinePen;
+
+        private ConnectionContainer? _container;
+        private ConnectionContainer? Container => _container ??= this.GetParentOfType<ConnectionContainer>();
 
         protected override Geometry CreateDefiningGeometry()
         {
@@ -678,12 +756,9 @@ namespace Nodify
         /// <param name="duration">The duration for moving an arrowhead from <see cref="Source"/> to <see cref="Target"/>.</param>
         public void StartAnimation(double duration = 1.5d)
         {
-            if (DirectionalArrowsCount > 0)
-            {
-                animationTokenSource?.Cancel();
-                animationTokenSource = new CancellationTokenSource();
-                this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration, animationTokenSource.Token);
-            }
+            StopAnimation();
+            animationTokenSource = new();
+            this.StartLoopingAnimation(DirectionalArrowsOffsetProperty, DirectionalArrowsOffset + 1d, duration, animationTokenSource.Token);
         }
 
         /// <summary>Stops the animation started by <see cref="StartAnimation(double)"/></summary>
@@ -717,8 +792,7 @@ namespace Nodify
 
         protected internal void OnSplit(Point splitLocation)
         {
-            object? connection = DataContext;
-            var args = new ConnectionEventArgs(connection)
+            var args = new ConnectionEventArgs(DataContext)
             {
                 RoutedEvent = SplitEvent,
                 SplitLocation = splitLocation,
@@ -736,8 +810,7 @@ namespace Nodify
 
         protected internal void OnDisconnect()
         {
-            object? connection = DataContext;
-            var args = new ConnectionEventArgs(connection)
+            var args = new ConnectionEventArgs(DataContext)
             {
                 RoutedEvent = DisconnectEvent,
                 Source = this

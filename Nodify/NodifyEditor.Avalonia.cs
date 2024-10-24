@@ -18,7 +18,7 @@ public partial class NodifyEditor
     /// <summary>
     /// On WPF single mouse wheel delta is 120, on Avalonia it is 0.6 (at least on macOS)
     /// </summary>
-    private double MouseWheelAvaloniaToWpfScale => 120 / 0.6;
+    private static double MouseWheelAvaloniaToWpfScale => 120 / 0.6;
     
     private double PointerTouchGestureMagnifyScale => 4;
 
@@ -77,4 +77,37 @@ public partial class NodifyEditor
             }
         }
     }
+
+    #region Scrollable
+
+    public Size Extent => new Size(_extentWidth, _extentHeight);
+
+    public Size Viewport => ViewportSize;
+
+    public Vector Offset
+    {
+        get => new Vector(_horizontalOffset, _verticalOffset);
+        set
+        {
+            _horizontalOffset = value.X;
+            _verticalOffset = value.Y;
+            UpdateViewportLocationOnScroll();
+            // merged SetHorizontalOffset and SetVerticalOffset
+        }
+    }
+
+    #endregion
+
+    protected override Type StyleKeyOverride => typeof(NodifyEditor);
+
+    public bool BringIntoView(Control target, Rect targetRect) => false;
+
+    public Control? GetControlInDirection(NavigationDirection direction, Control? from) => null;
+
+    public void RaiseScrollInvalidated(EventArgs e) => ScrollInvalidated?.Invoke(this, e);
+
+    public bool IsLogicalScrollEnabled => true;
+    public Size ScrollSize => new Size(ScrollIncrement / ViewportZoom, ScrollIncrement / ViewportZoom);
+    public Size PageScrollSize => ViewportSize;
+    public event EventHandler? ScrollInvalidated;
 }

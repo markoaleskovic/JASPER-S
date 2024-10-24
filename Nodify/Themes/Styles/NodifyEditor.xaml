@@ -62,17 +62,20 @@
                                 </ItemsPresenter.ItemsPanel>
                             </ItemsPresenter>
 
-                            <ItemsControl  x:Name="PART_ConnectionsHost"
-                                           ItemsSource="{TemplateBinding Connections}"
-                                           ItemTemplate="{TemplateBinding ConnectionTemplate}"
-                                           ClipToBounds="False"
-                                           IsTabStop="False">
-                                <ItemsControl.ItemsPanel>
+                            <local:ConnectionsMultiSelector  x:Name="PART_ConnectionsHost"
+                                                             ItemsSource="{TemplateBinding Connections}"
+                                                             SelectedItem="{Binding SelectedConnection, RelativeSource={RelativeSource TemplatedParent}}"
+                                                             SelectedItems="{TemplateBinding SelectedConnections}"
+                                                             CanSelectMultipleItems="{TemplateBinding CanSelectMultipleConnections}"
+                                                             ItemTemplate="{TemplateBinding ConnectionTemplate}"
+                                                             ClipToBounds="False"
+                                                             IsTabStop="False">
+                                <local:ConnectionsMultiSelector.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
+                                </local:ConnectionsMultiSelector.ItemsPanel>
+                            </local:ConnectionsMultiSelector>
 
                             <ContentControl ClipToBounds="False" Content="{TemplateBinding PendingConnection}" ContentTemplate="{TemplateBinding PendingConnectionTemplate}" />
 
@@ -138,10 +141,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style Selector="^ /template/ ItemsControl#PART_ConnectionsHost">
+        <Style Selector="^ /template/ local|ConnectionsMultiSelector#PART_ConnectionsHost">
             <Setter Property="ZIndex" Value="-1" />
         </Style>
-        <Style Selector="^:connections-on-top /template/ ItemsControl#PART_ConnectionsHost">
+        <Style Selector="^:connections-on-top /template/ local|ConnectionsMultiSelector#PART_ConnectionsHost">
             <Setter Property="ZIndex" Value="0" />
         </Style>
     </ControlTheme>

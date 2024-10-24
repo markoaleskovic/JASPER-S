@@ -92,7 +92,10 @@
                              ItemsSelectStartedCommand="{Binding SelectShapesStartedCommand}"
                              ItemsSelectCompletedCommand="{Binding SelectShapesCompletedCommand}"
                              RemoveConnectionCommand="{Binding RemoveConnectionCommand}"
-                             GridCellSize="10"
+                             PointerPressed="Editor_MouseDown"
+                             PointerMoved="Editor_MouseMove"
+                             PointerReleased="Editor_MouseUp"
+                             GridCellSize="5"
                              x:Name="Editor">
             <nodify:NodifyEditor.Theme>
                 <ControlTheme TargetType="{x:Type nodify:NodifyEditor}"
@@ -193,6 +196,7 @@
                                            SourcePosition="{Binding Source.Position}"
                                            TargetPosition="{Binding Target.Position}"
                                            Cursor="Hand"
+                                           nodify:BaseConnection.IsSelectable="True"
                                            Fill="Transparent"
                                            StrokeThickness="3">
                         <nodify:StepConnection.Stroke>
@@ -206,7 +210,16 @@
                                 <Style Selector="^:pointerover">
                                     <Setter Property="OutlineBrush">
                                         <Setter.Value>
-                                            <SolidColorBrush Color="White" Opacity="0.15" />
+                                            <SolidColorBrush Color="White"
+                                                             Opacity="0.15" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                                <Style Selector="^[(nodify|BaseConnection.IsSelected)=True]">
+                                    <Setter Property="OutlineBrush">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="DodgerBlue"
+                                                             Opacity="0.25" />
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
@@ -477,8 +490,7 @@
                 HorizontalAlignment="Center"
                 Margin="0 0 0 20"
                 CornerRadius="3"
-                Background="#1e293b"
-                PointerPressed="Toolbar_MouseDown">
+                Background="#1e293b">
             <Border.Effect>
                 <DropShadowDirectionEffect ShadowDepth="1" />
             </Border.Effect>
@@ -583,8 +595,7 @@
                 HorizontalAlignment="Left"
                 Margin="20 0 0 20"
                 CornerRadius="3"
-                Background="#1e293b"
-                PointerPressed="Toolbar_MouseDown">
+                Background="#1e293b">
             <Border.Effect>
                 <DropShadowDirectionEffect ShadowDepth="1" />
             </Border.Effect>
@@ -641,8 +652,7 @@
                 HorizontalAlignment="Right"
                 Margin="0 0 20 20"
                 Height="38"
-                CornerRadius="3"
-                PointerPressed="Toolbar_MouseDown">
+                CornerRadius="3">
 
             <ItemsControl ItemsSource="{Binding Cursors}">
                 <ItemsControl.ItemsPanel>

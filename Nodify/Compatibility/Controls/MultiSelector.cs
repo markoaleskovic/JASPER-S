@@ -2,6 +2,8 @@ namespace Nodify.Compatibility;
 
 public class MultiSelector : SelectingItemsControl
 {
+    protected override Type StyleKeyOverride => typeof(SelectingItemsControl);
+
     public MultiSelector()
     {
         Selection.SelectionChanged += OnSelectionChanged;

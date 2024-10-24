@@ -15,14 +15,15 @@
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/miroiu/nodify</RepositoryUrl>
     <PackageTags>wpf mvvm node-editor controls</PackageTags>
-    <Version>6.3.0</Version>
+    <Version>6.5.0</Version>
     <PackageReleaseNotes>
       > - Features:
-      >	  - Added a CuttingLine control that removes intersecting connections
-      >	  - Added CuttingLineStyle, CuttingStartedCommand, CuttingCompletedCommand, IsCutting, EnableCuttingLinePreview and CuttingConnectionTypes to NodifyEditor
-      >	  - Added EditorGestures.Editor.Cutting and EditorGestures.Editor.CancelAction
-      > - Bugfixes:
-      >	  - Fixed connection styles not inheriting from the BaseConnection style
+      >	  - Added SelectedConnection, SelectedConnections, CanSelectMultipleConnections and CanSelectMultipleItems dependency properties to NodifyEditor
+      >	  - Added IsSelected and IsSelectable attached dependency properties to BaseConnection
+      >	  - Added PrioritizeBaseConnectionForSelection static field to BaseConnection
+      >	  - Added EditorGestures.Connection.Selection
+      >	  - Added support for ScrollViewer in NodifyEditor (implements IScrollInfo)
+      >	  - Added NodifyEditor.ScrollIncrement dependency property
     </PackageReleaseNotes>
     <AssemblyOriginatorKeyFile>..\build\Nodify.snk</AssemblyOriginatorKeyFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -7,6 +7,9 @@
         <Style Selector="^[(local|CuttingLine.IsOverElement)=true]">
             <Setter Property="Opacity" Value="0.4" />
         </Style>
+        <Style Selector="^[(local|BaseConnection.IsSelectable)=true]">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme TargetType="{x:Type local:Connection}"
