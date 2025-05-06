@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodify.Shared", "Nodify.Shared\Nodify.Shared.csproj", "{8E12F9C1-0184-6D8B-FFB4-B6C07CB7F005}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JaspersSimulator", "JaspersSimulator\JaspersSimulator.csproj", "{621D6DA9-23F3-4D63-93D6-B18002D00DCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{8E12F9C1-0184-6D8B-FFB4-B6C07CB7F005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E12F9C1-0184-6D8B-FFB4-B6C07CB7F005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E12F9C1-0184-6D8B-FFB4-B6C07CB7F005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
