@@ -7,7 +7,8 @@
         x:Class="JaspersSimulator.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="JaspersSimulator">
+        Title="JaspersSimulator"
+        xmlns:views="clr-namespace:JaspersSimulator.Views">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,6 +16,18 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <!-- Grid for each views -->
+    <Grid RowDefinitions="Auto,*"
+      ColumnDefinitions="Auto,*">
+        <!-- Top Bar (spans both columns) -->
+        <views:TopbarView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+        <!-- Sidebar -->
+        <views:SidebarView Grid.Row="1" Grid.Column="0" />
+
+        <!-- Workspace (Nodify canvas) -->
+        <views:WorkspaceView Grid.Row="1" Grid.Column="1" />
+    </Grid>
+
 
 </Window>

@@ -24,12 +24,22 @@
     <PackageReference Include="Avalonia.Desktop" Version="11.1.0" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.0" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.0" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0.4"/>
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.1.0.4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Include="Avalonia.Diagnostics" Version="11.1.0">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Views\WorkspaceView.axaml.cs">
+      <DependentUpon>WorkspaceView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SidebarView.axaml.cs">
+      <DependentUpon>SidebarView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
