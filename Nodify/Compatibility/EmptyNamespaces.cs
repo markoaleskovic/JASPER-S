@@ -55,7 +55,7 @@ namespace System.Windows.Controls.Primitives
 
 namespace System.Windows
 {
-    internal class ThemeInfoAttribute : Attribute
+    public class ThemeInfoAttribute : Attribute
     {
         public ThemeInfoAttribute(ResourceDictionaryLocation a, ResourceDictionaryLocation b)
         {
@@ -63,7 +63,7 @@ namespace System.Windows
         }
     }
 
-    internal enum ResourceDictionaryLocation
+    public enum ResourceDictionaryLocation
     {
         None,
         SourceAssembly,

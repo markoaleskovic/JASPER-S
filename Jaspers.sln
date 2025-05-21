@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodify.Shared", "Nodify.Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JaspersSimulator", "JaspersSimulator\JaspersSimulator.csproj", "{621D6DA9-23F3-4D63-93D6-B18002D00DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jaspers", "Jaspers2\Jaspers.csproj", "{F1244F99-A60B-20AF-B585-D5A35E067A84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{621D6DA9-23F3-4D63-93D6-B18002D00DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1244F99-A60B-20AF-B585-D5A35E067A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1244F99-A60B-20AF-B585-D5A35E067A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1244F99-A60B-20AF-B585-D5A35E067A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1244F99-A60B-20AF-B585-D5A35E067A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
