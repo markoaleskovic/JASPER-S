@@ -30,12 +30,33 @@ namespace Jaspers.Operations
         //    => (double)Math.PI;
 
         [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
-        public static bool And(params bool[] operands)
+        public static bool AND(params bool[] operands)
             => operands.All(x => x);
+        [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
+        public static bool OR(params bool[] operands)
+            => operands.Any(x => x);
+
+        [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
+        public static bool XOR(params bool[] operands)
+            => operands.Aggregate(false, (x, y) => x ^ y);
+
+        [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
+        public static bool NOR(params bool[] operands)
+            => !operands.Any(x => x);
+        [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
+        public static bool NAND(params bool[] operands)
+            => !operands.All(x => x);
+        [Operation(MinInput = 2, MaxInput = 10, GenerateInputNames = false)]
+        public static bool XNOR(params bool[] operands)
+            => !operands.Aggregate(false, (x, y) => x ^ y);
 
         [Operation(GenerateInputNames = false)]
-        public static bool Not(bool value)
+        public static bool NOT(bool value)
             => !value;
+
+        [Operation(GenerateInputNames = false)]
+        public static bool Var(bool value)
+            => value;
     }
 
     public sealed class OperationAttribute : Attribute
