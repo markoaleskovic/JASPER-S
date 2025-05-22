@@ -9,7 +9,7 @@
         Background="{DynamicResource NodifyEditor.BackgroundBrush}"
         Foreground="{DynamicResource ForegroundBrush}"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="JASPERS - Logic Gate Simulator"
         Height="650"
         Width="1200">
     <Window.DataContext>

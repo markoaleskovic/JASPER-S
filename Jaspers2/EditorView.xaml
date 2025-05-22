@@ -333,7 +333,7 @@
                                  ToolTip.Tip="Double click to expand">
                         <Interaction.Behaviors>
                             <RoutedEventTriggerBehavior RoutedEvent="{x:Static InputElement.DoubleTappedEvent}">
-                                <InvokeCommandAction Command="{Binding DataContext.OpenCalculatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                <InvokeCommandAction Command="{Binding DataContext.OpenCircuitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                      CommandParameter="{Binding InnerCircuit}" />
                             </RoutedEventTriggerBehavior>
                         </Interaction.Behaviors>

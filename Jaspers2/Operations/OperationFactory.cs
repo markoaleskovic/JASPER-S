@@ -138,12 +138,12 @@ namespace Jaspers.Operations
                         Title = info.Title,
                     };
 
-                //case OperationType.Graph:
-                //    return new OperationGraphViewModel
-                //    {
-                //        Title = info.Title,
-                //        DesiredSize = new Size(420, 250)
-                //    };
+                case OperationType.Graph:
+                    return new OperationGraphViewModel
+                    {
+                        Title = info.Title,
+                        DesiredSize = new Size(420, 250)
+                    };
 
                 default:
                 {

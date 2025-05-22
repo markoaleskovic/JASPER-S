@@ -5,20 +5,20 @@ namespace Jaspers
 {
     public class EditorViewModel : ObservableObject
     {
-        public event Action<EditorViewModel, CircuitViewModel>? OnOpenInnerCalculator;
+        public event Action<EditorViewModel, CircuitViewModel>? OnOpenInnerCircuit;
 
         public EditorViewModel? Parent { get; set; }
 
         public EditorViewModel()
         {
             Circuit = new CircuitViewModel();
-            OpenCalculatorCommand = new DelegateCommand<CircuitViewModel>(calculator =>
+            OpenCircuitCommand = new DelegateCommand<CircuitViewModel>(circuit =>
             {
-                OnOpenInnerCalculator?.Invoke(this, calculator);
+                OnOpenInnerCircuit?.Invoke(this, circuit);
             });
         }
 
-        public INodifyCommand OpenCalculatorCommand { get; }
+        public INodifyCommand OpenCircuitCommand { get; }
 
         public Guid Id { get; } = Guid.NewGuid();
 

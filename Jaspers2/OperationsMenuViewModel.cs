@@ -52,11 +52,11 @@ namespace Jaspers
             _circuit = circuit;
             List<OperationInfoViewModel> operations = new List<OperationInfoViewModel>
             {
-                //new OperationInfoViewModel
-                //{
-                //    Type = OperationType.Graph,
-                //    Title = "Operation Graph",
-                //},
+                new OperationInfoViewModel
+                {
+                    Type = OperationType.Graph,
+                    Title = "Operation Graph",
+                },
                 new OperationInfoViewModel
                 {
                     Type = OperationType.Circuit,

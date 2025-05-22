@@ -1117,25 +1117,26 @@ namespace Nodify
                 double x = ViewportLocation.X;
                 double y = ViewportLocation.Y;
 
+                //disable auto panning
                 if (mousePosition.X <= edgeDistance)
                 {
-                    x -= autoPanSpeed;
+                    //x -= autoPanSpeed;
                     mouseLocation -= new Vector(autoPanSpeed, 0);
                 }
                 else if (mousePosition.X >= Bounds.Width - edgeDistance)
                 {
-                    x += autoPanSpeed;
+                    //x += autoPanSpeed;
                     mouseLocation += new Vector(autoPanSpeed, 0);
                 }
 
                 if (mousePosition.Y <= edgeDistance)
                 {
-                    y -= autoPanSpeed;
+                    //y -= autoPanSpeed;
                     mouseLocation -= new Vector(0, autoPanSpeed);
                 }
                 else if (mousePosition.Y >= Bounds.Height - edgeDistance)
                 {
-                    y += autoPanSpeed;
+                    //y += autoPanSpeed;
                     mouseLocation += new Vector(0, autoPanSpeed);
                 }
 

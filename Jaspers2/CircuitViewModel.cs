@@ -149,7 +149,7 @@ namespace Jaspers
 
             Operations.Add(new OperationGroupViewModel
             {
-                Title = "Operations",
+                Title = "Group",
                 Location = bounding.Position,
                 GroupSize = new Size(bounding.Width, bounding.Height)
             });

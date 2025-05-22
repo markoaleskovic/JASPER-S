@@ -23,11 +23,11 @@ namespace Jaspers
                 {
                     SelectedEditor = editor;
                 }
-                editor.OnOpenInnerCalculator += OnOpenInnerCalculator;
+                editor.OnOpenInnerCircuit += OnOpenInnerCircuit;
             })
             .WhenRemoved((editor) =>
             {
-                editor.OnOpenInnerCalculator -= OnOpenInnerCalculator;
+                editor.OnOpenInnerCircuit -= OnOpenInnerCircuit;
                 var childEditors = Editors.Where(ed => ed.Parent == editor).ToList();
                 childEditors.ForEach(ed => Editors.Remove(ed));
             });
@@ -37,7 +37,7 @@ namespace Jaspers
             });
         }
 
-        private void OnOpenInnerCalculator(EditorViewModel parentEditor, CircuitViewModel circuit)
+        private void OnOpenInnerCircuit(EditorViewModel parentEditor, CircuitViewModel circuit)
         {
             var editor = Editors.FirstOrDefault(e => e.Circuit == circuit);
             if (editor != null)
