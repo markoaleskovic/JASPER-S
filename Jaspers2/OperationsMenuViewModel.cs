@@ -45,11 +45,11 @@ namespace Jaspers
 
         public NodifyObservableCollection<OperationInfoViewModel> AvailableOperations { get; }
         public INodifyCommand CreateOperationCommand { get; }
-        private readonly CalculatorViewModel _calculator;
+        private readonly CircuitViewModel _circuit;
 
-        public OperationsMenuViewModel(CalculatorViewModel calculator)
+        public OperationsMenuViewModel(CircuitViewModel circuit)
         {
-            _calculator = calculator;
+            _circuit = circuit;
             List<OperationInfoViewModel> operations = new List<OperationInfoViewModel>
             {
                 //new OperationInfoViewModel
@@ -57,11 +57,11 @@ namespace Jaspers
                 //    Type = OperationType.Graph,
                 //    Title = "Operation Graph",
                 //},
-                //new OperationInfoViewModel
-                //{
-                //    Type = OperationType.Calculator,
-                //    Title = "Calculator"
-                //},
+                new OperationInfoViewModel
+                {
+                    Type = OperationType.Circuit,
+                    Title = "Circuit"
+                },
                 //new OperationInfoViewModel
                 //{
                 //    Type = OperationType.Expression,
@@ -79,15 +79,15 @@ namespace Jaspers
             OperationViewModel op = OperationFactory.GetOperation(operationInfo);
             op.Location = Location;
 
-            _calculator.Operations.Add(op);
+            _circuit.Operations.Add(op);
 
-            var pending = _calculator.PendingConnection;
+            var pending = _circuit.PendingConnection;
             if (pending.IsVisible)
             {
                 var connector = pending.Source.IsInput ? op.Output : op.Input.FirstOrDefault();
-                if (connector != null && _calculator.CanCreateConnection(pending.Source, connector))
+                if (connector != null && _circuit.CanCreateConnection(pending.Source, connector))
                 {
-                    _calculator.CreateConnection(pending.Source, connector);
+                    _circuit.CreateConnection(pending.Source, connector);
                 }
             }
             Close();

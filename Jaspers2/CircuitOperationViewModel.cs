@@ -2,9 +2,9 @@
 
 namespace Jaspers
 {
-    public class CalculatorOperationViewModel : OperationViewModel
+    public class CircuitOperationViewModel : OperationViewModel
     {
-        public CalculatorViewModel InnerCalculator { get; } = new CalculatorViewModel();
+        public CircuitViewModel InnerCircuit { get; } = new CircuitViewModel();
 
         private OperationViewModel InnerOutput { get; } = new OperationViewModel
         {
@@ -14,17 +14,17 @@ namespace Jaspers
             IsReadOnly = true
         };
 
-        private CalculatorInputOperationViewModel InnerInput { get; } = new CalculatorInputOperationViewModel
+        private CircuitInputOperationViewModel InnerInput { get; } = new CircuitInputOperationViewModel
         {
             Title = "Input Parameters",
             Location = new Point(300, 300),
             IsReadOnly = true
         };
 
-        public CalculatorOperationViewModel()
+        public CircuitOperationViewModel()
         {
-            InnerCalculator.Operations.Add(InnerInput);
-            InnerCalculator.Operations.Add(InnerOutput);
+            InnerCircuit.Operations.Add(InnerInput);
+            InnerCircuit.Operations.Add(InnerOutput);
 
             Output = new ConnectorViewModel();
 

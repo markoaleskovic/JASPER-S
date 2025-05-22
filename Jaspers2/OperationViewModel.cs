@@ -69,6 +69,19 @@ namespace Jaspers
 
         public NodifyObservableCollection<ConnectorViewModel> Input { get; } = new NodifyObservableCollection<ConnectorViewModel>();
 
+        //private NodifyObservableCollection<ConnectorViewModel>? _output = new NodifyObservableCollection<ConnectorViewModel>();
+        //public NodifyObservableCollection<ConnectorViewModel>? Output
+        //{
+        //    get => _output;
+        //    set
+        //    {
+        //        if (SetProperty(ref _output, value) && _output != null)
+        //        {
+        //            _output[0].Operation = this;
+        //        }
+        //    }
+        //}
+
         private ConnectorViewModel? _output;
         public ConnectorViewModel? Output
         {

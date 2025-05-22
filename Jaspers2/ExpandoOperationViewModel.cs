@@ -7,11 +7,19 @@ namespace Jaspers
         public ExpandoOperationViewModel()
         {
             AddInputCommand = new RequeryCommand(
-                () => Input.Add(new ConnectorViewModel()),
+                () =>
+                {
+                    Input.Add(new ConnectorViewModel());
+                    OnInputValueChanged();
+                },
                 () => Input.Count < MaxInput);
 
             RemoveInputCommand = new RequeryCommand(
-                () => Input.RemoveAt(Input.Count - 1),
+                () =>
+                {
+                    Input.RemoveAt(Input.Count - 1);
+                    OnInputValueChanged();
+                },
                 () => Input.Count > MinInput);
 
             Input.WhenAdded(_ => AddInputCommand.RaiseCanExecuteChanged());

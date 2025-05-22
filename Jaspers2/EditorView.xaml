@@ -146,7 +146,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <nodify:NodifyEditor DataContext="{Binding Calculator}"
+        <nodify:NodifyEditor DataContext="{Binding Circuit}"
                              ItemsSource="{Binding Operations}"
                              Connections="{Binding Connections}"
                              SelectedItems="{Binding SelectedOperations}"
@@ -236,7 +236,7 @@
                                 HorizontalScrollBarVisibility="Auto"
                                 VerticalScrollBarVisibility="Auto">
                                 <nodify:NodifyEditor Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"
-                                                     DataContext="{Binding InnerCalculator}"
+                                                     DataContext="{Binding InnerCircuit}"
                                                      ItemsSource="{Binding Operations}"
                                                      Connections="{Binding Connections}"
                                                      SelectedItems="{Binding SelectedOperations}"
@@ -326,7 +326,7 @@
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:CalculatorOperationViewModel}">
+                <DataTemplate DataType="{x:Type jaspers:CircuitOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Input="{Binding Input}"
                                  Output="{Binding Output, Converter={StaticResource ItemToListConverter}}"
@@ -334,13 +334,13 @@
                         <Interaction.Behaviors>
                             <RoutedEventTriggerBehavior RoutedEvent="{x:Static InputElement.DoubleTappedEvent}">
                                 <InvokeCommandAction Command="{Binding DataContext.OpenCalculatorCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                     CommandParameter="{Binding InnerCalculator}" />
+                                                     CommandParameter="{Binding InnerCircuit}" />
                             </RoutedEventTriggerBehavior>
                         </Interaction.Behaviors>
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:CalculatorInputOperationViewModel}">
+                <DataTemplate DataType="{x:Type jaspers:CircuitInputOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Output="{Binding Output}">
                         <StackPanel>
@@ -422,7 +422,7 @@
                                  Opacity="0.7" />
             </Border.Background>
             <ScrollViewer>
-                <ItemsControl ItemsSource="{Binding Calculator.OperationsMenu.AvailableOperations}">
+                <ItemsControl ItemsSource="{Binding Circuit.OperationsMenu.AvailableOperations}">
                     <ItemsControl.ItemContainerTheme>
                         <ControlTheme TargetType="{x:Type ContentPresenter}">
                             <Setter Property="Control.Margin"

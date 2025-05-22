@@ -24,6 +24,7 @@ namespace Jaspers.Operations
                     var attr = method.GetCustomAttribute<OperationAttribute>();
                     var para = method.GetParameters();
 
+
                     bool generateInputNames = true;
 
                     op.Type = OperationType.Normal;
@@ -110,25 +111,26 @@ namespace Jaspers.Operations
                 //        Expression = "1 + sin {a} + cos {b}"
                 //    };
 
-                //case OperationType.Calculator:
-                //    return new CalculatorOperationViewModel
-                //    {
-                //        Title = info.Title,
-                //        Operation = info.Operation,
-                //    };
+                case OperationType.Circuit:
+                    return new CircuitOperationViewModel
+                    {
+                        Title = info.Title,
+                        Operation = info.Operation,
+                    };
 
-                //case OperationType.Expando:
-                //    var o = new ExpandoOperationViewModel
-                //    {
-                //        MaxInput = info.MaxInput,
-                //        MinInput = info.MinInput,
-                //        Title = info.Title,
-                //        Output = new ConnectorViewModel(),
-                //        Operation = info.Operation
-                //    };
+                case OperationType.Expando:
+                    var o = new ExpandoOperationViewModel
+                    {
+                        MaxInput = info.MaxInput,
+                        MinInput = info.MinInput,
+                        Title = info.Title,
+                        Output = new ConnectorViewModel(),
+                        Operation = info.Operation
+                    };
 
-                //    o.Input.AddRange(input);
-                //    return o;
+                    o.Input.AddRange(input);
+                    o.OnInputValueChanged();
+                    return o;
 
                 case OperationType.Group:
                     return new OperationGroupViewModel

@@ -1,15 +1,16 @@
 ﻿using Nodify;
+using System;
 
 namespace Jaspers
 {
-    public class CalculatorInputOperationViewModel : OperationViewModel
+    public class CircuitInputOperationViewModel : OperationViewModel
     {
-        public CalculatorInputOperationViewModel()
+        public CircuitInputOperationViewModel()
         {
             AddOutputCommand = new RequeryCommand(
                 () => Output.Add(new ConnectorViewModel
                 {
-                    Title = $"In {Output.Count}"
+                    Title = $"Input {(char)('A' + Output.Count)}"
                 }),
                 () => Output.Count < 10);
 
@@ -19,7 +20,7 @@ namespace Jaspers
 
             Output.Add(new ConnectorViewModel
             {
-                Title = $"In {Output.Count}"
+                Title = $"Input {(char)('A' + Output.Count)}"
             });
         }
 

@@ -3,9 +3,9 @@ using Nodify;
 
 namespace Jaspers
 {
-    public class CalculatorViewModel : ObservableObject
+    public class CircuitViewModel : ObservableObject
     {
-        public CalculatorViewModel()
+        public CircuitViewModel()
         {
             CreateConnectionCommand = new DelegateCommand<ConnectorViewModel>(
                 _ => CreateConnection(PendingConnection.Source, PendingConnection.Target),
@@ -46,7 +46,7 @@ namespace Jaspers
             {
                 x.Input.WhenRemoved(RemoveConnection);
 
-                if (x is CalculatorInputOperationViewModel ci)
+                if (x is CircuitInputOperationViewModel ci)
                 {
                     ci.Output.WhenRemoved(RemoveConnection);
                 }

@@ -5,14 +5,14 @@ namespace Jaspers
 {
     public class EditorViewModel : ObservableObject
     {
-        public event Action<EditorViewModel, CalculatorViewModel>? OnOpenInnerCalculator;
+        public event Action<EditorViewModel, CircuitViewModel>? OnOpenInnerCalculator;
 
         public EditorViewModel? Parent { get; set; }
 
         public EditorViewModel()
         {
-            Calculator = new CalculatorViewModel();
-            OpenCalculatorCommand = new DelegateCommand<CalculatorViewModel>(calculator =>
+            Circuit = new CircuitViewModel();
+            OpenCalculatorCommand = new DelegateCommand<CircuitViewModel>(calculator =>
             {
                 OnOpenInnerCalculator?.Invoke(this, calculator);
             });
@@ -22,11 +22,11 @@ namespace Jaspers
 
         public Guid Id { get; } = Guid.NewGuid();
 
-        private CalculatorViewModel _calculator = default!;
-        public CalculatorViewModel Calculator 
+        private CircuitViewModel _circuit = default!;
+        public CircuitViewModel Circuit 
         {
-            get => _calculator;
-            set => SetProperty(ref _calculator, value);
+            get => _circuit;
+            set => SetProperty(ref _circuit, value);
         }
 
         private string? _name;

@@ -37,9 +37,9 @@ namespace Jaspers
             });
         }
 
-        private void OnOpenInnerCalculator(EditorViewModel parentEditor, CalculatorViewModel calculator)
+        private void OnOpenInnerCalculator(EditorViewModel parentEditor, CircuitViewModel circuit)
         {
-            var editor = Editors.FirstOrDefault(e => e.Calculator == calculator);
+            var editor = Editors.FirstOrDefault(e => e.Circuit == circuit);
             if (editor != null)
             {
                 SelectedEditor = editor;
@@ -49,7 +49,7 @@ namespace Jaspers
                 var childEditor = new EditorViewModel
                 {
                     Parent = parentEditor,
-                    Calculator = calculator,
+                    Circuit = circuit,
                     Name = $"[Inner] Editor {Editors.Count + 1}"
                 };
                 Editors.Add(childEditor);

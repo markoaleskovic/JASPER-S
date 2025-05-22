@@ -79,7 +79,7 @@
                         </StackPanel.Resources>
 
                         <StackPanel Margin="0 0 0 20">
-                            <TextBlock Text="(New) Drag and drop nodes from the toolbox"
+                            <TextBlock Text="Drag and drop nodes from the toolbox"
                                    TextWrapping="Wrap"
                                    Foreground="{DynamicResource NodeInput.BorderBrush}"
                                    FontWeight="Bold"/>
@@ -114,6 +114,7 @@
                                     FontWeight="Bold">C</Run>
                             <Run>: group selection (hold SHIFT and mouse drag the header to move the group node alone)</Run>
                         </TextBlock>
+                        <!--
                         <TextBlock Text="Drag a connection and drop it on the editor"
                                 TextWrapping="Wrap"
                                 FontWeight="Bold" />
@@ -125,7 +126,7 @@
                                    FontWeight="Bold" />
                         <TextBlock Text="Create an Operation Graph and add operations to it"
                                    TextWrapping="Wrap"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold" />-->
                     </StackPanel>
                 </ScrollViewer>
             </Border>

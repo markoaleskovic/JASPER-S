@@ -8,7 +8,7 @@ namespace Jaspers
         Normal,
         Expando,
         Expression,
-        Calculator,
+        Circuit,
         Group,
         Graph
     }

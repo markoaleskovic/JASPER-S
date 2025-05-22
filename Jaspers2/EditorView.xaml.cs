@@ -17,7 +17,7 @@ namespace Jaspers
         
         private void OpenOperationsMenu(object? sender, PointerReleasedEventArgs e)
         {
-            if (!e.Handled && e.Source is NodifyEditor editor && !editor.IsPanning && editor.DataContext is CalculatorViewModel calculator &&
+            if (!e.Handled && e.Source is NodifyEditor editor && !editor.IsPanning && editor.DataContext is CircuitViewModel calculator &&
                 e.InitialPressMouseButton == MouseButton.Right)
             {
                 e.Handled = true;
@@ -36,7 +36,7 @@ namespace Jaspers
             ItemContainer? itemContainer = sender as ItemContainer;
             NodifyEditor? editor = sender as NodifyEditor ?? itemContainer?.Editor;
 
-            if (!e.Handled && editor?.DataContext is CalculatorViewModel calculator)
+            if (!e.Handled && editor?.DataContext is CircuitViewModel calculator)
             {
                 calculator.OperationsMenu.Close();
             }
@@ -45,7 +45,7 @@ namespace Jaspers
         private void OnDropNode(object? sender, DragEventArgs e)
         {
             NodifyEditor? editor = (e.Source as NodifyEditor) ?? (e.Source as Control)?.GetLogicalParent() as NodifyEditor;
-            if(editor != null && editor.DataContext is CalculatorViewModel calculator
+            if(editor != null && editor.DataContext is CircuitViewModel calculator
                 && e.Data.Get(typeof(OperationInfoViewModel).FullName) is OperationInfoViewModel operation)
             {
                 OperationViewModel op = OperationFactory.GetOperation(operation);

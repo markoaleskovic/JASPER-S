@@ -1,6 +1,6 @@
 namespace Jaspers
 {
-    public class OperationGraphViewModel : CalculatorOperationViewModel
+    public class OperationGraphViewModel : CircuitOperationViewModel
     {
         private Size _size;
         public Size DesiredSize
@@ -35,8 +35,8 @@ namespace Jaspers
 
         public OperationGraphViewModel()
         {
-            InnerCalculator.Operations[0].Location = new Point(50, 50);
-            InnerCalculator.Operations[1].Location = new Point(200, 50);
+            InnerCircuit.Operations[0].Location = new Point(50, 50);
+            InnerCircuit.Operations[1].Location = new Point(200, 50);
         }
     }
 }
