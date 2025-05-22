@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public static class OperationsExtensions
     {

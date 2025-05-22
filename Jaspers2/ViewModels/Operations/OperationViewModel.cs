@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using Jaspers.Operations;
+using Jaspers.ViewModels.Editor;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public class OperationViewModel : ObservableObject
     {

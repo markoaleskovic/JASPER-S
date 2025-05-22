@@ -1,7 +1,8 @@
 ﻿using System;
+using Jaspers.ViewModels.Operations;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Editor
 {
     public class EditorViewModel : ObservableObject
     {

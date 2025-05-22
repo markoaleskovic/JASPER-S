@@ -1,4 +1,4 @@
-﻿namespace Jaspers
+﻿namespace Jaspers.ViewModels.Operations
 {
     public class CreateOperationInfoViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using Nodify;
 
-namespace Jaspers
+namespace Jaspers.Views
 {
     public partial class MainWindow : Window
     {

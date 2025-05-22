@@ -1,4 +1,4 @@
-﻿namespace Jaspers
+﻿namespace Jaspers.Views
 {
     /// <summary>
     /// Interaction logic for App.xaml

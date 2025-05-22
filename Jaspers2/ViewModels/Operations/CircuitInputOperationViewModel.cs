@@ -1,7 +1,7 @@
-﻿using Nodify;
-using System;
+﻿using Jaspers.ViewModels.Editor;
+using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public class CircuitInputOperationViewModel : OperationViewModel
     {

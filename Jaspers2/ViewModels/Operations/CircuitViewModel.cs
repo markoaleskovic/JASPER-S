@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using Jaspers.ViewModels.Editor;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public class CircuitViewModel : ObservableObject
     {

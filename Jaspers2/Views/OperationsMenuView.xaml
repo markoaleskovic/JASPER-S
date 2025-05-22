@@ -1,16 +1,18 @@
-﻿<UserControl x:Class="Jaspers.OperationsMenuView"
+﻿<UserControl x:Class="Jaspers.Views.OperationsMenuView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Jaspers"
              xmlns:shared="clr-namespace:Nodify;assembly=Nodify.Shared" 
-             xmlns:jaspers="clr-namespace:Jaspers"
+             xmlns:jaspers="clr-namespace:Jaspers" 
+             xmlns:editor="clr-namespace:Jaspers.ViewModels.Editor"
+             xmlns:operations="clr-namespace:Jaspers.ViewModels.Operations"
              mc:Ignorable="d"
              MinWidth="250"
              d:DesignHeight="400"
              d:DesignWidth="250"
-             d:DataContext="{d:DesignInstance jaspers:OperationsMenuViewModel}">
+             d:DataContext="{d:DesignInstance editor:OperationsMenuViewModel}">
     <UserControl.Resources>
         <ControlTheme TargetType="{x:Type TextBlock}" x:Key="{x:Type TextBlock}">
             <Setter Property="Foreground"
@@ -33,7 +35,7 @@
             <ItemsControl Grid.Row="1"
                           ItemsSource="{Binding AvailableOperations}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type jaspers:OperationInfoViewModel}">
+                    <DataTemplate DataType="{x:Type operations:OperationInfoViewModel}">
                         <Button Content="{Binding Title}"
                                 Command="{Binding DataContext.CreateOperationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 CommandParameter="{Binding}"

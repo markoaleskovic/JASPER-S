@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jaspers.ViewModels.Editor;
 using Nodify;
 using StringMath;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public class ExpressionOperationViewModel : OperationViewModel
     {

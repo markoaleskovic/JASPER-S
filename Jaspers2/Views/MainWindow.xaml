@@ -1,11 +1,13 @@
-﻿<Window x:Class="Jaspers.MainWindow"
+﻿<Window x:Class="Jaspers.Views.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jaspers"
         xmlns:shared="clr-namespace:Nodify;assembly=Nodify.Shared" 
-        xmlns:jaspers="clr-namespace:Jaspers"
+        xmlns:jaspers="clr-namespace:Jaspers" 
+        xmlns:views="clr-namespace:Jaspers.Views" 
+        xmlns:editor="clr-namespace:Jaspers.ViewModels.Editor"
         Background="{DynamicResource NodifyEditor.BackgroundBrush}"
         Foreground="{DynamicResource ForegroundBrush}"
         mc:Ignorable="d"
@@ -13,7 +15,7 @@
         Height="650"
         Width="1200">
     <Window.DataContext>
-        <jaspers:ApplicationViewModel />
+        <editor:ApplicationViewModel />
     </Window.DataContext>
     
     <Window.KeyBindings>
@@ -32,8 +34,8 @@
     </Window.Resources>
     
     <Window.DataTemplates>
-        <DataTemplate DataType="{x:Type jaspers:EditorViewModel}">
-            <jaspers:EditorView/>
+        <DataTemplate DataType="{x:Type editor:EditorViewModel}">
+            <views:EditorView/>
         </DataTemplate>
     </Window.DataTemplates>
     

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Jaspers.ViewModels.Operations;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Editor
 {
     public class ApplicationViewModel : ObservableObject
     {

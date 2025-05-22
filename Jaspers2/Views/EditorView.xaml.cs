@@ -1,7 +1,8 @@
 ﻿using Jaspers.Operations;
+using Jaspers.ViewModels.Operations;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.Views
 {
     public partial class EditorView : UserControl
     {

@@ -1,6 +1,6 @@
 ﻿using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Editor
 {
     public class PendingConnectionViewModel : ObservableObject
     {

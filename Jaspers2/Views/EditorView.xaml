@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Jaspers.EditorView"
+﻿<UserControl x:Class="Jaspers.Views.EditorView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,8 +10,11 @@
              xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
              xmlns:compatibility="clr-namespace:Nodify.Compatibility;assembly=Nodify"
              xmlns:jaspers="clr-namespace:Jaspers"
-             xmlns:converters="clr-namespace:Jaspers.Converters"
-             d:DataContext="{d:DesignInstance Type=jaspers:EditorViewModel}"
+             xmlns:converters="clr-namespace:Jaspers.Converters" 
+             xmlns:views="clr-namespace:Jaspers.Views" 
+             xmlns:editor="clr-namespace:Jaspers.ViewModels.Editor"
+             xmlns:operations="clr-namespace:Jaspers.ViewModels.Operations"
+             d:DataContext="{d:DesignInstance Type=editor:EditorViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -114,13 +117,13 @@
         <converters:ItemToListConverter x:Key="ItemToListConverter" />
 
         <DataTemplate x:Key="ConnectionTemplate"
-                      DataType="{x:Type jaspers:ConnectionViewModel}">
+                      DataType="{x:Type editor:ConnectionViewModel}">
             <nodify:CircuitConnection Source="{Binding Output.Anchor}"
                                       Target="{Binding Input.Anchor}" />
         </DataTemplate>
 
         <DataTemplate x:Key="PendingConnectionTemplate"
-                      DataType="{x:Type jaspers:PendingConnectionViewModel}">
+                      DataType="{x:Type editor:PendingConnectionViewModel}">
             <nodify:PendingConnection IsVisible="{Binding IsVisible}"
                                       Source="{Binding Source, Mode=OneWayToSource}"
                                       Target="{Binding Target, Mode=OneWayToSource}"
@@ -172,7 +175,7 @@
                             Value="{Binding Value}" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
-                            <DataTemplate DataType="{x:Type jaspers:ConnectorViewModel}">
+                            <DataTemplate DataType="{x:Type editor:ConnectorViewModel}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Title}"
                                                VerticalAlignment="Center"
@@ -196,7 +199,7 @@
                             Value="{Binding Anchor, Mode=OneWayToSource}" />
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
-                            <DataTemplate DataType="{x:Type jaspers:ConnectorViewModel}">
+                            <DataTemplate DataType="{x:Type editor:ConnectorViewModel}">
                                 <TextBox Text="{Binding Value}"
                                          IsEnabled="False" />
                             </DataTemplate>
@@ -206,13 +209,13 @@
             </nodify:NodifyEditor.Resources>
 
             <nodify:NodifyEditor.DataTemplates>
-                <DataTemplate DataType="{x:Type jaspers:OperationGraphViewModel}">
+                <DataTemplate DataType="{x:Type operations:OperationGraphViewModel}">
                     <nodify:GroupingNode Header="{Binding}"
                                          CanResize="{Binding IsExpanded}"
                                          ActualSize="{Binding DesiredSize, Mode=TwoWay}"
                                          MovementMode="Self">
                         <nodify:GroupingNode.HeaderTemplate>
-                            <DataTemplate DataType="{x:Type jaspers:OperationGraphViewModel}">
+                            <DataTemplate DataType="{x:Type operations:OperationGraphViewModel}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -261,7 +264,7 @@
                                         <collections:ArrayList>
                                             <nodify:DecoratorContainer DataContext="{Binding OperationsMenu}"
                                                                        Location="{Binding Location}">
-                                                <jaspers:OperationsMenuView />
+                                                <views:OperationsMenuView />
                                             </nodify:DecoratorContainer>
                                         </collections:ArrayList>
                                     </nodify:NodifyEditor.Decorators>
@@ -292,13 +295,13 @@
                     </nodify:GroupingNode>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:ExpandoOperationViewModel}">
+                <DataTemplate DataType="{x:Type operations:ExpandoOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Content="{Binding}"
                                  Input="{Binding Input}"
                                  Output="{Binding Output, Converter={StaticResource ItemToListConverter}}">
                         <nodify:Node.ContentTemplate>
-                            <DataTemplate DataType="{x:Type jaspers:ExpandoOperationViewModel}">
+                            <DataTemplate DataType="{x:Type operations:ExpandoOperationViewModel}">
                                 <StackPanel>
                                     <Button Theme="{StaticResource IconButton}"
                                             Content="{StaticResource PlusIcon}"
@@ -312,12 +315,12 @@
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:ExpressionOperationViewModel}">
+                <DataTemplate DataType="{x:Type operations:ExpressionOperationViewModel}">
                     <nodify:Node Content="{Binding}"
                                  Input="{Binding Input}"
                                  Output="{Binding Output, Converter={StaticResource ItemToListConverter}}">
                         <nodify:Node.ContentTemplate>
-                            <DataTemplate DataType="{x:Type jaspers:ExpressionOperationViewModel}">
+                            <DataTemplate DataType="{x:Type operations:ExpressionOperationViewModel}">
                                 <TextBox Text="{Binding Expression}"
                                          MinWidth="100"
                                          Margin="5 0 0 0" />
@@ -326,7 +329,7 @@
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:CircuitOperationViewModel}">
+                <DataTemplate DataType="{x:Type operations:CircuitOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Input="{Binding Input}"
                                  Output="{Binding Output, Converter={StaticResource ItemToListConverter}}"
@@ -340,7 +343,7 @@
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:CircuitInputOperationViewModel}">
+                <DataTemplate DataType="{x:Type operations:CircuitInputOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Output="{Binding Output}">
                         <StackPanel>
@@ -363,7 +366,7 @@
                                         Value="{Binding Anchor, Mode=OneWayToSource}" />
                                 <Setter Property="HeaderTemplate">
                                     <Setter.Value>
-                                        <DataTemplate DataType="{x:Type jaspers:ConnectorViewModel}">
+                                        <DataTemplate DataType="{x:Type editor:ConnectorViewModel}">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBox Text="{Binding Value}"
                                                          IsEnabled="False" />
@@ -378,12 +381,12 @@
                     </nodify:Node>
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:OperationGroupViewModel}">
+                <DataTemplate DataType="{x:Type operations:OperationGroupViewModel}">
                     <nodify:GroupingNode Header="{Binding Title}"
                                          ActualSize="{Binding GroupSize, Mode=TwoWay}" />
                 </DataTemplate>
 
-                <DataTemplate DataType="{x:Type jaspers:OperationViewModel}">
+                <DataTemplate DataType="{x:Type operations:OperationViewModel}">
                     <nodify:Node Content="{Binding Title}"
                                  Input="{Binding Input}"
                                  Output="{Binding Output, Converter={StaticResource ItemToListConverter}}" />
@@ -401,7 +404,7 @@
                 <collections:ArrayList>
                     <nodify:DecoratorContainer DataContext="{Binding OperationsMenu}"
                                                Location="{Binding Location}">
-                        <jaspers:OperationsMenuView />
+                        <views:OperationsMenuView />
                     </nodify:DecoratorContainer>
                 </collections:ArrayList>
             </nodify:NodifyEditor.Decorators>
@@ -436,7 +439,7 @@
                         </ControlTheme>
                     </ItemsControl.ItemContainerTheme>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type jaspers:OperationInfoViewModel}">
+                        <DataTemplate DataType="{x:Type operations:OperationInfoViewModel}">
                             <nodify:Node Content="{Binding Title}"
                                          Input="{Binding Input}"
                                          BorderBrush="{StaticResource BorderBrush}"

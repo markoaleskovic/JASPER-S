@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Jaspers.Operations;
+using Jaspers.ViewModels.Operations;
 using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Editor
 {
     public class OperationsMenuViewModel : ObservableObject
     {

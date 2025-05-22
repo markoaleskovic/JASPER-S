@@ -1,4 +1,4 @@
-﻿namespace Jaspers
+﻿namespace Jaspers.Views
 {
     public partial class OperationsMenuView : UserControl
     {

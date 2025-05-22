@@ -1,6 +1,7 @@
-﻿using Nodify;
+﻿using Jaspers.ViewModels.Editor;
+using Nodify;
 
-namespace Jaspers
+namespace Jaspers.ViewModels.Operations
 {
     public class ExpandoOperationViewModel : OperationViewModel
     {
