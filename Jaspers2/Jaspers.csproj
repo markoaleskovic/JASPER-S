@@ -32,4 +32,8 @@
     <AdditionalFiles SourceItemGroup="AvaloniaXaml" Include="**/*.xaml" />
     <AvaloniaResource Include="**/*.xaml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Interfaces\" />
+  </ItemGroup>
 </Project>

@@ -1,12 +1,13 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using Jaspers.Operations;
+﻿using Jaspers.Operations;
 using Jaspers.ViewModels.Editor;
+using Jaspers.ViewModels.Interfaces;
 using Nodify;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Jaspers.ViewModels.Operations
 {
-    public class OperationViewModel : ObservableObject
+    public class OperationViewModel : ObservableObject, IOperationViewModel
     {
         public OperationViewModel()
         {
@@ -14,6 +15,17 @@ namespace Jaspers.ViewModels.Operations
             {
                 x.Operation = this;
                 x.IsInput = true;
+                x.PropertyChanged += OnInputValueChanged;
+            })
+            .WhenRemoved(x =>
+            {
+                x.PropertyChanged -= OnInputValueChanged;
+            });
+
+            AdditionalOutputs.WhenAdded(x =>
+            {
+                x.Operation = this;
+                x.IsInput = false;
                 x.PropertyChanged += OnInputValueChanged;
             })
             .WhenRemoved(x =>
@@ -70,19 +82,6 @@ namespace Jaspers.ViewModels.Operations
 
         public NodifyObservableCollection<ConnectorViewModel> Input { get; } = new NodifyObservableCollection<ConnectorViewModel>();
 
-        //private NodifyObservableCollection<ConnectorViewModel>? _output = new NodifyObservableCollection<ConnectorViewModel>();
-        //public NodifyObservableCollection<ConnectorViewModel>? Output
-        //{
-        //    get => _output;
-        //    set
-        //    {
-        //        if (SetProperty(ref _output, value) && _output != null)
-        //        {
-        //            _output[0].Operation = this;
-        //        }
-        //    }
-        //}
-
         private ConnectorViewModel? _output;
         public ConnectorViewModel? Output
         {
@@ -96,6 +95,20 @@ namespace Jaspers.ViewModels.Operations
             }
         }
 
+        //gadno
+        private NodifyObservableCollection<ConnectorViewModel> _additionalOutputs = new NodifyObservableCollection<ConnectorViewModel>();
+        public NodifyObservableCollection<ConnectorViewModel> AdditionalOutputs
+        {
+            get => _additionalOutputs;
+            set
+            {
+                value.ForEach(o =>
+                {
+                    o.Operation = this;
+                });
+            }
+        }
+
         public virtual void OnInputValueChanged()
         {
             if (Output != null && Operation != null)
@@ -104,6 +117,8 @@ namespace Jaspers.ViewModels.Operations
                 {
                     var input = Input.Select(i => i.Value).ToArray();
                     Output.Value = Operation?.Execute(input) ?? false;
+
+                    AdditionalOutputs.ForEach(o => o.Value = Operation?.Execute(input) ?? false);
                 }
                 catch
                 {

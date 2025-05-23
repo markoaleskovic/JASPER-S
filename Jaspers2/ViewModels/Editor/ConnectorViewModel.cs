@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Jaspers.ViewModels.Interfaces;
 using Jaspers.ViewModels.Operations;
 using Nodify;
 

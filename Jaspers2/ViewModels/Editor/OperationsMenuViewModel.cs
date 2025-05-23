@@ -53,15 +53,15 @@ namespace Jaspers.ViewModels.Editor
             _circuit = circuit;
             List<OperationInfoViewModel> operations = new List<OperationInfoViewModel>
             {
-                new OperationInfoViewModel
-                {
-                    Type = OperationType.Graph,
-                    Title = "Operation Graph",
-                },
+                //new OperationInfoViewModel
+                //{
+                //    Type = OperationType.Graph,
+                //    Title = "Operation Graph",
+                //},
                 new OperationInfoViewModel
                 {
                     Type = OperationType.Circuit,
-                    Title = "Circuit"
+                    Title = "Custom Circuit"
                 },
                 //new OperationInfoViewModel
                 //{

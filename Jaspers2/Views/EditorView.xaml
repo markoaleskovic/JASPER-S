@@ -332,7 +332,7 @@
                 <DataTemplate DataType="{x:Type operations:CircuitOperationViewModel}">
                     <nodify:Node Header="{Binding Title}"
                                  Input="{Binding Input}"
-                                 Output="{Binding Output, Converter={StaticResource ItemToListConverter}}"
+                                 Output="{Binding Outputs}"
                                  ToolTip.Tip="Double click to expand">
                         <Interaction.Behaviors>
                             <RoutedEventTriggerBehavior RoutedEvent="{x:Static InputElement.DoubleTappedEvent}">
@@ -358,6 +358,44 @@
                         <nodify:Node.Resources>
                             <ControlTheme TargetType="{x:Type nodify:NodeOutput}" x:Key="{x:Type nodify:NodeOutput}"
                                           BasedOn="{StaticResource {x:Type nodify:NodeOutput}}">
+                                <Setter Property="Header"
+                                        Value="{Binding}" />
+                                <Setter Property="IsConnected"
+                                        Value="{Binding IsConnected}" />
+                                <Setter Property="Anchor"
+                                        Value="{Binding Anchor, Mode=OneWayToSource}" />
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate DataType="{x:Type editor:ConnectorViewModel}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Text="{Binding Value}"
+                                                         IsEnabled="False" />
+                                                <TextBlock Text="{Binding Title}"
+                                                           Margin="5 0 0 0" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </ControlTheme>
+                        </nodify:Node.Resources>
+                    </nodify:Node>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type operations:CircuitOutputOperationViewModel}">
+                    <nodify:Node Header="{Binding Title}"
+                                 Input="{Binding Input}">
+                        <StackPanel>
+                            <Button Theme="{StaticResource IconButton}"
+                                    Content="{StaticResource PlusIcon}"
+                                    Command="{Binding AddInputCommand}" />
+                            <Button Theme="{StaticResource IconButton}"
+                                    Content="{StaticResource RemoveKeyIcon}"
+                                    Command="{Binding RemoveInputCommand}" />
+                        </StackPanel>
+
+                        <nodify:Node.Resources>
+                            <ControlTheme TargetType="{x:Type nodify:NodeInput}" x:Key="{x:Type nodify:NodeInput}"
+                                          BasedOn="{StaticResource {x:Type nodify:NodeInput}}">
                                 <Setter Property="Header"
                                         Value="{Binding}" />
                                 <Setter Property="IsConnected"

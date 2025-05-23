@@ -28,7 +28,7 @@ namespace Jaspers.ViewModels.Operations
             .WhenRemoved(c =>
             {
                 var ic = Connections.Count(con => con.Input == c.Input || con.Output == c.Input);
-                var oc = Connections.Count(con => con.Input == c.Output || con.Output == c.Output);
+                var oc = Connections.Count(con => con.Output == c.Output || con.Input == c.Output);
 
                 if (ic == 0)
                 {
@@ -46,10 +46,15 @@ namespace Jaspers.ViewModels.Operations
             Operations.WhenAdded(x =>
             {
                 x.Input.WhenRemoved(RemoveConnection);
+                x.AdditionalOutputs.WhenRemoved(RemoveConnection);
 
                 if (x is CircuitInputOperationViewModel ci)
                 {
                     ci.Output.WhenRemoved(RemoveConnection);
+                }
+                if (x is CircuitOutputOperationViewModel co)
+                {
+                    co.Input.WhenRemoved(RemoveConnection);
                 }
 
                 void RemoveConnection(ConnectorViewModel i)
@@ -68,6 +73,11 @@ namespace Jaspers.ViewModels.Operations
                 if (x.Output != null)
                 {
                     DisconnectConnector(x.Output);
+                }
+
+                foreach (var output in x.AdditionalOutputs)
+                {
+                    DisconnectConnector(output);
                 }
             });
 
@@ -105,7 +115,7 @@ namespace Jaspers.ViewModels.Operations
         }
 
         internal bool CanCreateConnection(ConnectorViewModel source, ConnectorViewModel? target)
-            => target == null || (source != target && source.Operation != target.Operation && source.IsInput != target.IsInput);
+            => target == null || (source != target && source.Operation == null) || (source != target && source.Operation != target.Operation && source.IsInput != target.IsInput);
 
         internal void CreateConnection(ConnectorViewModel source, ConnectorViewModel? target)
         {
